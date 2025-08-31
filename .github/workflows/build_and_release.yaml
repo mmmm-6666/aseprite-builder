@@ -1,39 +1,39 @@
-name: Build and release Aseprite
+name: 名称：构建和发布 Aseprite
 
 on:
   push:
     branches:
-      - main
+      -       - 主要
     paths:
       - 'BuildLog.md'
   workflow_dispatch:
 env:
-  BUILD_TYPE: Release
+  BUILD_TYPE:   构建类型：发布
 
 jobs:
   fetch-aseprite-info:
-    name: Fetch deps info
-    runs-on: ubuntu-latest
+    name:     名称：获取依赖信息
+    runs-on:     运行于: ubuntu-latest
     outputs:
-      download-link: ${{ steps.aseprite-link.outputs.download-link }}
-      release-tag: ${{ steps.aseprite-link.outputs.release-tag }}
+      download-link:       下载链接：${{ steps.aseprite-link.outputs.download-link }}{{ steps.aseprite-link.outputs.download-link }}
+      release-tag:       发布标签: ${{ steps.aseprite-link.outputs.release-tag }}{{ steps.aseprite-link.outputs.release-tag }}
     steps:
-      - name: Fetch Aseprite release link
-        id: aseprite-link
-        uses: a1393323447/fetch-release@main
+      - name:       - 名称：获取 Aseprite 发布链接
+        id:         id: aseprite-link
+        uses:         用途: a1393323447/fetch-release@main
         with:
-            group: aseprite
-            repo: aseprite
-            match: Aseprite-.*?-Source.zip
+            group:             组: aseprite
+            repo:             库：aseprite
+            match:             匹配：Aseprite-.*?-Source.zip
 
   create-release:
-    name: Create Release
-    runs-on: ubuntu-latest
-    needs: fetch-aseprite-info
+    name:     名称：创建发布
+    runs-on:     运行于: ubuntu-latest
+    needs:     需求：获取 ASEprite 信息
     permissions:
-      contents: write
+      contents:       内容：写
     outputs:
-      download-link: ${{ needs.fetch-aseprite-info.outputs.download-link }}
+      download-link:       下载链接：${{ needs.fetch-aseprite-info.outputs.download-link }}{{ needs.fetch-aseprite-info.outputs.download-link }}
       release-tag: ${{ needs.fetch-aseprite-info.outputs.release-tag }}
     steps:
       - uses: actions/checkout@v2
@@ -52,7 +52,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
         matrix:
-          os: [ windows-latest, ubuntu-latest, macOS-latest ]
+          os: [ windows-latest ]
         fail-fast: false
     steps:
       - name: Install Dependencies
